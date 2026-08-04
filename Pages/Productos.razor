@@ -1,0 +1,72 @@
+@page "/productos"
+
+@using EcoSystem.Client.Models
+@using EcoSystem.Client.Services
+@inject ApiService ApiService
+
+<PageTitle>Productos</PageTitle>
+
+<h1>Productos</h1>
+
+@if (cargando)
+{
+    <p>Cargando productos...</p>
+}
+else if (!string.IsNullOrWhiteSpace(mensajeError))
+{
+    <div class="alert alert-danger">
+        @mensajeError
+    </div>
+}
+else if (productos.Count == 0)
+{
+    <p>No se encontraron productos.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Precio</th>
+                <th>Stock</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var producto in productos)
+            {
+                <tr>
+                    <td>@producto.Id</td>
+                    <td>@producto.Nombre</td>
+                    <td>@producto.Descripcion</td>
+                    <td>@producto.Precio.ToString("C2")</td>
+                    <td>@producto.Stock</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Producto> productos = new();
+    private bool cargando = true;
+    private string mensajeError = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            productos = await ApiService.ObtenerProductosAsync();
+        }
+        catch (Exception ex)
+        {
+            mensajeError = $"No fue posible cargar los productos: {ex.Message}";
+        }
+        finally
+        {
+            cargando = false;
+        }
+    }
+}

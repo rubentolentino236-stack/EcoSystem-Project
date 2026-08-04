@@ -1,14 +1,30 @@
+using System.Net.Http.Json;
+using EcoSystem.Client.Models;
+
 namespace EcoSystem.Client.Services;
 
 public class ApiService
 {
-    private readonly HttpClient _http;
+    private readonly HttpClient _httpClient;
 
-    public ApiService(HttpClient http)
+    public ApiService(HttpClient httpClient)
     {
-        _http = http;
+        _httpClient = httpClient;
     }
 
-    // Aquí más adelante agregaremos los métodos
-    // GET, POST, PUT y DELETE.
+    public async Task<List<Producto>> ObtenerProductosAsync()
+    {
+        try
+        {
+            var productos = await _httpClient
+                .GetFromJsonAsync<List<Producto>>("api/productos");
+
+            return productos ?? new List<Producto>();
+        }
+        catch (HttpRequestException ex)
+        {
+            Console.WriteLine($"Error al consultar la API: {ex.Message}");
+            return new List<Producto>();
+        }
+    }
 }
