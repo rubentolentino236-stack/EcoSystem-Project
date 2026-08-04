@@ -1,0 +1,29 @@
+# Archivos generados por .NET
+bin/
+obj/
+
+# Configuración local de Visual Studio
+.vs/
+
+# Configuración local de VS Code
+.vscode/
+
+# Archivos de usuario
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Resultados de pruebas y cobertura
+TestResults/
+coverage/
+coverage.*
+
+# Archivos temporales
+*.tmp
+*.temp
+*.log
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
