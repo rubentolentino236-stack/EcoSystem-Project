@@ -1,0 +1,52 @@
+@page "/ecosystems"
+
+@using EcoSystem.Client.ViewModels
+@inject MainViewModel ViewModel
+
+<PageTitle>EcoSystem Connect</PageTitle>
+
+<h1>@ViewModel.Title</h1>
+
+<p>Listado de ecosistemas</p>
+
+@if (ViewModel.Ecosystems.Count == 0)
+{
+    <p>No existen ecosistemas.</p>
+}
+else
+{
+    <table class="table">
+
+        <thead>
+
+            <tr>
+
+                <th>Id</th>
+
+                <th>Nombre</th>
+
+                <th>Descripción</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+        @foreach (var eco in ViewModel.Ecosystems)
+        {
+            <tr>
+
+                <td>@eco.Id</td>
+
+                <td>@eco.Name</td>
+
+                <td>@eco.Description</td>
+
+            </tr>
+        }
+
+        </tbody>
+
+    </table>
+}
